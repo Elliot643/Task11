@@ -4,8 +4,7 @@ public class program {
 	
 	private static String[][] chessboard = new String[8][8];
 	
-	private static int[] numbers= {1,2,3,4,5,6,7,8};
-	private static char[] alphabet= {'a','b','c','d','e','f','g','h'};
+	private static char[] letters= {'a','b','c','d','e','f','g','h'};
 
 	public static void main(String[] args) {
 		System.out.println("The 8 queen problem by Elliot and Simon N.");
@@ -16,21 +15,28 @@ public class program {
 			}
 		}
 		Scanner myObj = new Scanner(System.in);
-		System.out.println("Place chesspiece");
+		System.out.print("Place chesspiece: ");
 		String position = myObj.nextLine();
 		
-		int[] coordinate = placeQueen(position);
+		placeQueen(position);
 		
 		
 		printBoard();
 
 	}
 	private static void placeQueen(String position) {
-		for(int i=0;i<numbers.length;i++) {
-			
+		int x=0;
+		for(int i=0;i<letters.length;i++) {
+			if(position.substring(0,1).equals(letters[i])) {
+				x=i+1;
+			}
 		}
-		int x = numbers[];
 		int y = Integer.parseInt(position.substring(1,2));
+		
+		System.out.println(x);
+		System.out.println(y);
+		
+		chessboard[y][x]="[X]";
 		
 	}
 	public static void printBoard() {
