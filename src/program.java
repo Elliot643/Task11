@@ -3,8 +3,9 @@ import java.util.Scanner;
 public class program {
 	
 	private static String[][] chessboard = new String[8][8];
+	private static int[][] matrix = new int[8][8];
 	
-	private static char[] letters= {'a','b','c','d','e','f','g','h'};
+	private static String[] letters= {"a","b","c","d","e","f","g","h"};
 
 	public static void main(String[] args) {
 		System.out.println("The 8 queen problem by Elliot and Simon N.");
@@ -14,6 +15,7 @@ public class program {
 				chessboard[i][x]="[ ]";
 			}
 		}
+		
 		Scanner myObj = new Scanner(System.in);
 		System.out.print("Place chesspiece: ");
 		String position = myObj.nextLine();
@@ -28,13 +30,11 @@ public class program {
 		int x=0;
 		for(int i=0;i<letters.length;i++) {
 			if(position.substring(0,1).equals(letters[i])) {
-				x=i+1;
+				x=i;
 			}
 		}
-		int y = Integer.parseInt(position.substring(1,2));
 		
-		System.out.println(x);
-		System.out.println(y);
+		int y = 8-Integer.parseInt(position.substring(1,2));
 		
 		chessboard[y][x]="[X]";
 		
