@@ -46,11 +46,8 @@ public class program {
 			printBoard(a);
 			System.out.println();
 		}*/
-		int i=0;
-		do while(placePieces(findAllFree(matrix),matrix).length()>0) {
-			
-			
-			i++;
+		for(int[][] a:listOfBoards) {
+			ArrayList<int[][]> aC = placePieces(freePos,matrix);
 		}
 		
 		
