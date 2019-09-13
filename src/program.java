@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class program {
 	
@@ -7,24 +10,21 @@ public class program {
 	private static int[][] matrix = new int[8][8];
 	
 	private static String[] letters= {"a","b","c","d","e","f","g","h"};
+	
+	private static ArrayList<int[][]> possibleSolutions = new ArrayList<int[][]>();
+	
+	static int numOfPrints=0;
 
 	public static void main(String[] args) {
-		System.out.println("The 8 queen problem by Elliot and Simon N.");
-		/*
-		for(int i=0;i<chessboard.length;i++) {
-			for(int x=0;x<chessboard.length;x++) {
-				chessboard[i][x]="[ ]";
-			}
-		}*/
-		/*
+		System.out.println("The 8 queen problem by Elliot and Simon N.\nThe Queens' positions is marked by a 2");
+		
+		
 		Scanner myObj = new Scanner(System.in);
 		System.out.print("Place chesspiece: ");
 		String position = myObj.nextLine();
 		myObj.close();
-		placeQueen(position);
-		*/
-		
-		String position = "c3";
+		System.out.println();
+
 		int xC=0;
 		for(int i=0;i<letters.length;i++) {
 			if(position.substring(0,1).equals(letters[i])) {
@@ -33,24 +33,33 @@ public class program {
 		}		
 		int yC = Integer.parseInt(position.substring(1,2))-1;
 		
+		//Places first Queen.
 		matrix=placeQueen(xC,yC,matrix);
-		printBoard(matrix);
-		System.out.println("org");
 		
+		//Finds all open positions with the first Queen placed.
 		ArrayList<int[]> freePos = findAllFree(matrix);
-
-		
+		//Places a second Queen on all possible positions.
 		ArrayList<int[][]> listOfBoards = placePieces(freePos,matrix);
-		/*
-		for(int[][] a: listOfBoards) {
+
+		//Iterates thru all possible boards.
+		recursiveFunction(listOfBoards);
+		
+		//Prints the solutions.
+		for(int[][] a: possibleSolutions) {
 			printBoard(a);
 			System.out.println();
-		}*/
-		for(int[][] a:listOfBoards) {
-			ArrayList<int[][]> aC = placePieces(freePos,matrix);
 		}
 		
+		System.out.println("Found solutions: "+possibleSolutions.size());
+
+	}
+	private static void recursiveFunction(ArrayList<int[][]> listOfBoards) {
 		
+				
+		for(int[][] a:listOfBoards) {
+			ArrayList<int[][]> aC = placePieces(findAllFree(a),a);
+			recursiveFunction(aC);
+		}
 
 	}
 	private static int[][] placeHorizontal(int x, int y, int[][] board) {
@@ -115,11 +124,17 @@ public class program {
 	private static ArrayList<int[][]> placePieces(ArrayList<int[]> list, int[][] board){
 		
 		ArrayList<int[][]> listOfBoards = new ArrayList<int[][]>();
-		int[][] copyBoard = board;
+		int[][] copyBoard;
+		
 		for(int[] a:list) {
-			copyBoard=board;
+			copyBoard = new int[8][8];
+			
+			for(int xC=0;xC<8;xC++) {
+				for(int yC=0;yC<8;yC++) {
+					copyBoard[xC][yC]=board[xC][yC];
+				}
+			}
 			copyBoard=placeQueen(a[0],a[1],copyBoard);
-			//printBoard(copyBoard);
 			int numOfQueens=0;
 			int numOfZeros=0;
 			for(int x=0;x<8;x++) {
@@ -132,10 +147,25 @@ public class program {
 					}
 				}
 			}
-			if((8-numOfQueens)<=numOfZeros) {
+			if(numOfQueens==8) {
+				boolean exists=false;
+				if(possibleSolutions.size()>0) {
+					for(int[][] d:possibleSolutions) {
+						if(Arrays.deepEquals(d, copyBoard)) {
+							exists=true;
+						}
+					}
+					if(!exists) {
+						possibleSolutions.add(copyBoard);
+					}		
+				}
+				else {
+					possibleSolutions.add(copyBoard);
+				}
+			}
+			else if((8-numOfQueens)<=numOfZeros) {
 				listOfBoards.add(copyBoard);
 			}
-			//System.out.println("new piece");
 		}
 		
 		return listOfBoards;
@@ -165,6 +195,8 @@ public class program {
 			}
 			System.out.println();
 		}
+		
+		numOfPrints++;
 	}
 	public static ArrayList<int[]> findAllFree(int[][] board) {
 		
@@ -178,21 +210,10 @@ public class program {
 				}
 			}
 		}
-			
-		
-		
+	
 		return result;
 	}
 
-	public static void fillSpaces(int x, int y){
-		for (int i = 0; i < chessboard.length; i++){
-			chessboard[y][i] = "[x]";
-		}
-		for (int j = 0; j < chessboard.length; j++)
-		{
-			chessboard[j][x] = "[x]";
-		}
-	}
 	
 
 }
