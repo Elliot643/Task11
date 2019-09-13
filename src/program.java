@@ -20,7 +20,7 @@ public class program {
 		Scanner myObj = new Scanner(System.in);
 		System.out.print("Place chesspiece: ");
 		String position = myObj.nextLine();
-		
+		myObj.close();
 		placeQueen(position);
 		*/
 		
@@ -183,5 +183,16 @@ public class program {
 		
 		return result;
 	}
+
+	public static void fillSpaces(int x, int y){
+		for (int i = 0; i < chessboard.length; i++){
+			chessboard[y][i] = "[x]";
+		}
+		for (int j = 0; j < chessboard.length; j++)
+		{
+			chessboard[j][x] = "[x]";
+		}
+	}
+	
 
 }
