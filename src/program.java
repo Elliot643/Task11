@@ -24,14 +24,31 @@ public class program {
 		String position = myObj.nextLine();
 		myObj.close();
 		System.out.println();
-
+		
+		Boolean validLetter = false;
 		int xC=0;
 		for(int i=0;i<letters.length;i++) {
 			if(position.substring(0,1).equals(letters[i])) {
 				xC=i;
+				validLetter=true;
 			}
-		}		
-		int yC = Integer.parseInt(position.substring(1,2))-1;
+		}
+		if(!validLetter) {
+			System.out.println("Invalid input");
+			System.exit(0);
+		}
+		int yC=0;
+		try {
+			yC = Integer.parseInt(position.substring(1,2))-1;
+			if(yC>8) {
+				System.out.println("Invalid input");
+				System.exit(0);
+			}
+		}
+		catch(Exception e) {
+			System.out.println("Invalid input");
+			System.exit(0);
+		}
 		
 		//Places first Queen.
 		matrix=placeQueen(xC,yC,matrix);
