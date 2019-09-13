@@ -10,20 +10,6 @@ public class program {
 
 	public static void main(String[] args) {
 		System.out.println("The 8 queen problem by Elliot and Simon N.");
-		/*
-		for(int i=0;i<chessboard.length;i++) {
-			for(int x=0;x<chessboard.length;x++) {
-				chessboard[i][x]="[ ]";
-			}
-		}*/
-		/*
-		Scanner myObj = new Scanner(System.in);
-		System.out.print("Place chesspiece: ");
-		String position = myObj.nextLine();
-		myObj.close();
-		placeQueen(position);
-		*/
-		
 		String position = "c3";
 		int xC=0;
 		for(int i=0;i<letters.length;i++) {
@@ -34,24 +20,33 @@ public class program {
 		int yC = Integer.parseInt(position.substring(1,2))-1;
 		
 		matrix=placeQueen(xC,yC,matrix);
-		printBoard(matrix);
-		System.out.println("org");
+		
+		int i = 0;
+		/*do {
+			ArrayList<int[]> freePos = findAllFree(matrix);
+			ArrayList<int[][]> listOfBoards = placePieces(freePos,matrix);	
+			i++;
+		} while (listOfBoards[0][0].length() > 0);
+		*/
+			
+
+
+		//i = 0;
 		
 		ArrayList<int[]> freePos = findAllFree(matrix);
-
-		
 		ArrayList<int[][]> listOfBoards = placePieces(freePos,matrix);
-		/*
-		for(int[][] a: listOfBoards) {
+		for(int[][] a: listOfBoards) { //Prints every possible Queen placement, along with its routes.
 			printBoard(a);
-			System.out.println();
-		}*/
-		for(int[][] a:listOfBoards) {
-			ArrayList<int[][]> aC = placePieces(freePos,matrix);
+			System.out.println(a.length);
+			System.out.println(i+"\n");
+			i++;
 		}
 		
 		
-
+		
+		/*for(int[][] a:listOfBoards) {
+			ArrayList<int[][]> aC = placePieces(freePos,matrix);
+		}*/
 	}
 	private static int[][] placeHorizontal(int x, int y, int[][] board) {
 		for(int i=0;i<8;i++) {
@@ -185,12 +180,12 @@ public class program {
 	}
 
 	public static void fillSpaces(int x, int y){
-		for (int i = 0; i < chessboard.length; i++){
-			chessboard[y][i] = "[x]";
+		for (int i = 0; i < matrix.length; i++){
+			matrix[y][i] = 0;
 		}
-		for (int j = 0; j < chessboard.length; j++)
+		for (int j = 0; j < matrix.length; j++)
 		{
-			chessboard[j][x] = "[x]";
+			matrix[j][x] = 0;
 		}
 	}
 	
